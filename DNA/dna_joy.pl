@@ -3,6 +3,8 @@
 use strict; 
 use warnings;
 
+die "usage: dna_joy.pl <DNA input>\n" unless @ARGV == 1;
+
 my ($DNA) = @ARGV;
 my $A_count = ($DNA =~ tr/A/A/);
 my $T_count = ($DNA =~ tr/T/T/);
