@@ -1,11 +1,19 @@
-#!/usr/bin/perl 
+#!/usr/bin/perl
+use strict;
+use warnings;
 
-open IN,"<$ARGV[0]";
-while (<IN>) {
-my $coutA= s/A/#/g;
-my $coutG= s/G/#/g;
-my $coutC= s/C/#/g;
-my $coutT= s/T/#/g;
-print " $coutA $coutC $coutG $coutT\n";
+die "usage: $0 <file>\n" unless @ARGV == 1;
+
+my $countA;
+my $countG;
+my $countC;
+my $countT;
+
+while (<>) {
+  $countA += tr/A/A/;
+  $countC += tr/C/C/;
+  $countG += tr/G/G/;
+  $countT += tr/T/T/;
 }
-close IN;
+
+print "$countA $countC $countG $countT\n";
