@@ -9,10 +9,8 @@ my $GC_intent;
 my $C_count;
 my $G_count;
 my $GC_count;
-my $seq;
-my %hash = {};
 my $max = 0;
-my $number;
+my $number = 0;
 
 $/ = ">";<IN>;
 while (<IN>) {
@@ -22,9 +20,9 @@ while (<IN>) {
 	$G_count = $id[1] =~ tr/G/G/;
         $GC_count = $C_count+$G_count; 
         $GC_intent =int(100000000*$GC_count/length $id[1])/1000000;
-	if ($max <$GC_intent) {
+	if ($max < $GC_intent) {
 		$max = $GC_intent; $number = $id[0];
-	} 
+	}
 }
 print "$number\n$max\n";
 close IN;
