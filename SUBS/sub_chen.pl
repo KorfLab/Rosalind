@@ -1,27 +1,19 @@
 #!/usr/bin/perl
+# sub_chen.pl by chen
 use strict; use warnings;
 
-die "usage:perl sub_chen.pl <file>" unless @ARGV == 1;
 
+die "usage:perl sub_chen.pl <file>\n" unless @ARGV == 1;
 open IN,"<$ARGV[0]";
-my @array;
-my $a;
-my $b;
-my $c;
-my $d;
-while (<>) {
+while (<>)  {
 	chomp;
-	my $sequence = <IN>;
-	my $motif = <IN>; 
-	my $j=length ($sequence) - length ($motif);
-       	for(my $i=0 ; $i<$j ; $i++) {
-		($a,$b,$c,$d)=(split //)[$i,$i+1,$i+2,$i+3];
-		$array[$i]="$a$b$c$d";
-		if ($array[$i] eq "$motif") {
-		print $i+1, "\t";
-		}
+	my $seq = <IN>;
+	my $motif = <IN>;
+	my ($pos,$now) = (0,-1);
+	until ($pos == -1) {
+		$pos = index ($seq,$motif,$now+1);
+		$now = $pos;
+		print $pos unless $pos < 0;
 	}
-	print "\n";
-	
 }
-
+close IN;
