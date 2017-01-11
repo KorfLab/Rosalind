@@ -1,9 +1,11 @@
-#!/usr/bin/perl -w
-use strict;
+#!/usr/bin/perl
+# rna_chen.pl
+use strict;  use warnings;
 
-open IN,"<$ARGV[0]";
-while (<IN>)  {
-     s/T/U/g;
-print "$_\n";
+die "usage:rna_che.pl <file>" unless @ARGV == 1;
+
+while (<>) {
+	$_ =~ tr/T/U/;
+	print $_;
 }
-close IN;
+
