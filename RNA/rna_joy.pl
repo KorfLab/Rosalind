@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# ENA.pl
+# RNA.pl
 use strict; 
 use warnings;
 
