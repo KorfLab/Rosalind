@@ -19,3 +19,4 @@ $DNA = reverse $DNA;
 
 open(my $out, ">output.txt") or die "error writing";
 print $out $DNA;
+close $out;
