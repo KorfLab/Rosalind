@@ -1,10 +1,14 @@
 #!/usr/bin/env Python
 
-# RNA.py
+# rna_sam.py
 
 import sys
 
-input = sys.argv[1]
+try:
+	input = sys.argv[1]
+except IOError:
+	sys.exit("Specify the line of DNA as ARGV1.")
+	
 output = ""
 for letter in input:
 	if letter == "T":
