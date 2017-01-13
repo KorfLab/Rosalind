@@ -5,10 +5,10 @@ use strict; use warnings;
 die "usage: perl prot_chen.pl <file> " unless @ARGV == 1;
 
 open IN,"<$ARGV[0]";
-my $sequence = <IN>;
+my $seq = <IN>;
 my $protein = "";
-for (my $i = 0; $i < (length ($sequence) - 2); $i += 3) {
-	$protein .= &codon2protein (substr ($sequence, $i, 3));
+for (my $i = 0; $i < length ($seq); $i += 3) {
+	$protein .= &codon2protein (substr ($seq, $i, 3));
 	}
 	print "$protein\n";
 close IN;
