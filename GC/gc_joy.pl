@@ -2,7 +2,6 @@
 # gc_joy.pl
 use strict;
 use warnings;
-use Data::Dumper;
 
 die "usage: gc_joy.pl <DNA fasta file>\n" if @ARGV == 0;
 
