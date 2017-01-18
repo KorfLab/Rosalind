@@ -1,6 +1,6 @@
 #!/usr/bin/env Python2.7
 
-#gc_nick1.py
+#fib_nick1.py
 #uses memory for only last 2 steps, nearly instantaneous runtime
 import argparse
   
