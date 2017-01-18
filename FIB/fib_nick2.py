@@ -1,7 +1,6 @@
 #!/usr/bin/env Python2.7
 
-#gc_nick2.py
-
+#fib_nick2.py
 
 #actual recursion which is bad for runtime
 def rab(n,k):
