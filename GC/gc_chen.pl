@@ -4,14 +4,14 @@ use strict;  use warnings;
 
 die "usage: gc_chen.pl <file>" unless @ARGV == 1;
 my ($file) = @ARGV;
-open (my $in "<",$file)
+open (my $in "<",$file) or die "Error: failed to open $ARGV[0]\n";
 my $GC_intent; 
 my $GC_count;
 my $max = 0;
 my $number = 0;
 
-$/ = ">"; <IN>;
-while (<IN>) {
+?
+while (<$in>) {
         chomp;
 	my @id = (split /\n/, $_, 2);      
 	$GC_count = $id[1] =~ tr/GC/GC/;
