@@ -4,14 +4,21 @@ use strict; use warnings;
 
 die "usage: perl prot_chen.pl <file> " unless @ARGV == 1;
 
-open IN,"<$ARGV[0]";
-my $seq = <IN>;
+my ($file) = @ARGV; #good practice. Never deal with ARGV more than once.
+
+open (my $in, "<", $file) or die "Cannot read from $file: $!\n";
+#file does not exist then $! will tell you "file does not exist"
+#Cannot read from DNA.txt: File not found"
+#Cannot read from DNA.txt: Perission denied"
+
+#open IN,"<$ARGV[0]";
+my $seq = <$in>;
 my $protein = "";
-for (my $i = 0; $i < length ($seq); $i += 3) {
-	$protein .= &codon2protein (substr ($seq, $i, 3));
-	}
-	print "$protein\n";
-close IN;
+for (my $i = 0; $i < length($seq); $i += 3) {
+	$protein .= codon2protein(substr($seq, $i, 3));
+}
+print "$protein\n";
+close $in;
 
 sub codon2protein {
 	my $code = shift @_;
@@ -68,7 +75,7 @@ sub codon2protein {
         UGU => 'C',   
         CGU => 'R',
         AGU => 'S',   
-        GGU => 'G',
+	GGU => 'G',
         UGC => 'C',
         CGC => 'R',
         AGC => 'S',
@@ -80,8 +87,8 @@ sub codon2protein {
         CGG => 'R',
         AGG => 'R',
         GGG => 'G',
-);
-return ($genetic_code{$code});
+	);
+	return($genetic_code{$code});
 }
 
 
