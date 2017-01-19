@@ -17,8 +17,8 @@ while (my $line = <$in1>) {
 			my $count = count($dna);
 			$name = $ref   if $perc < $count;
 			$perc = $count if $perc < $count;
+			undef $dna;
 		}
-		undef $dna;
 		($ref) = $line =~ /^>(\w+)$/;
 	}
 	else {
