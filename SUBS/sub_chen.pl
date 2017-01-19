@@ -3,7 +3,7 @@
 use strict; use warnings;
 
 die "usage:perl sub_chen.pl <file>\n" unless @ARGV == 1;
-open (my $in,"<"$ARGV[0]);
+open (my $in,"<",$ARGV[0]);
 chomp(my $seq = <in>);
 chomp(my $motif = <in>);
 
