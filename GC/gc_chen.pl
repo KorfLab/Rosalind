@@ -23,4 +23,4 @@ while (<IN>) {
 }
 $max = 100 * $max;
 printf "%s\n%.6f\n", $number, $max;
-close IN;
+close $in;
