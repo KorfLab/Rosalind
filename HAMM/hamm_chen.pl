@@ -11,7 +11,7 @@ my $j = 0;
 my @seq1 = split("", $seq1);
 my @seq2 = split("", $seq2);
 #print "$seq1-------$seq2";
-for (my $i = 0; $i <= length $seq1; $i++) {
+for (my $i = 0; $i <= length($seq1); $i++) {
 	if (pop(@seq1) eq pop(@seq2)) {
 	} else {
 		$j ++;
