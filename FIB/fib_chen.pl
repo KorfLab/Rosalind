@@ -5,7 +5,7 @@ use strict;  use warnings;
 die "usage:perl fib_chen.pl <file>" unless @ARGV == 1;
 
 open ($in,"<",$ARGV[0]);
-my @array = split (" ", <$in>, 2);
+my @array = split(" ", <$in>, 2);
 my $A = 0;
 my $B = 1;
 my $C;
