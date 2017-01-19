@@ -17,4 +17,4 @@ until ($pos == -1) {
 	$position = $pos+1;
 	print "$position\t" unless $pos < 0;
 }
-close IN;
+close $in;
