@@ -4,8 +4,8 @@ use strict;  use warnings;
 
 die "usage:perl fib_chen.pl <file>" unless @ARGV == 1;
 
-open IN,"<$ARGV[0]";
-my @array = split (" ", <IN>, 2);
+open ($in,"<",$ARGV[0]);
+my @array = split (" ", <$in>, 2);
 my $A = 0;
 my $B = 1;
 my $C;
@@ -17,5 +17,5 @@ for (my $i = 1; $i < $array[0]; $i++) {
 	}
 
 print $C;
-close IN;
+close $in;
 
