@@ -68,8 +68,6 @@ sub search_orf{
 			# translation
 			for (my $j = $i; $j < length($dna) - 2; $j+= 3) {
 				$codon = substr($dna, $j, 3);
-
-				if (length($codon) != 3)   { last }
 				if ($AA{$codon} eq ' ') { last } # exist loop at stop codon
 				else 			   		   { $aa_seq .= $AA{$codon} }	
 			}
