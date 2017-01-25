@@ -47,7 +47,7 @@ push(@uniq_orf, $orf[0]);
 for (my $i = 1; $i < @orf; $i++) {
 	for (my $j = 0; $j < @uniq_orf; $j++) {
 		if ($orf[$i] eq $uniq_orf[$j]) { last }
-		elsif ($j == (scalar(@uniq_orf) - 1)) { push(@uniq_orf, $orf[$i]); last }
+		elsif ($j == @uniq_orf - 1) { push(@uniq_orf, $orf[$i]); last }
 	}
 }
 print join("\n", @uniq_orf), "\n";
