@@ -58,7 +58,7 @@ sub search_orf{
 	my %AA = %$aa_ref;
 	my @orf;
 
-	for (my $i = 0; $i < (length($dna)); $i++) {
+	for (my $i = 0; $i < (length($dna) - 2); $i++) {
 
 		# search for start codon
 		my $start = substr($dna, $i, 3);
