@@ -90,6 +90,6 @@ for (my $i = 0; $i < length($protein); $i++) {
 
 sub codon2protein {
 	my $code = shift @_;	    
-return ($genetic_code{$code});
+	return ($genetic_code{$code});
 }
 
