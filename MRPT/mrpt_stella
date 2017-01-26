@@ -48,7 +48,7 @@ while (my $line = <$in1>) {
 	while ($seq	=~ /N/g) {
 		$pos = length($`) + 1;
 		my $curr = $& .substr($', 0, 3);
-		if ($curr =~ /^N.[ST]./ and $curr !~ /^.P../ and $curr !~ /^...P/) {
+		if ($curr =~ /^N[^P][ST][^P]/) {
 			$print .= " " if $check != 0;
 			$print .= "$pos";
 			$check = 1;
