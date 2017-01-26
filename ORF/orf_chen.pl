@@ -5,26 +5,7 @@ use strict; use warnings;
 die "usage: perl orf_chen.pl <file>\n" unless @ARGV == 1;
 
 my $protein;
-
-while (<>) {
-	if (/^>/) {
-		next;
-	} else {
-		for (my $i = 0; $i < length($_); $i += 3) {
-			$protein .= codon2protein(substr($_, $i, 3));
-		}
-	}	
-}
-my $protein_M = substr($protein, "M");
-for (my $i = 0; $i < length($protein); $i++) {
-	my $orf = substr($protein_M, "b");
-	print "$orf\n";
-}
-
-
-sub codon2protein {
-	my $code = shift @_;
-	my %genetic_code = (
+my %genetic_code = (
 	        UUU => 'F',
         	CUU => 'L',      
 		AUU => 'I',
@@ -89,7 +70,26 @@ sub codon2protein {
         	CGG => 'R',
         	AGG => 'R',
         	GGG => 'G',
-	);			    
+	);	
+
+while (<>) {
+	if (/^>/) {
+		next;
+	} else {
+		for (my $i = 0; $i < length($_); $i += 3) {
+			$protein .= codon2protein(substr($_, $i, 3));
+		}
+	}	
+}
+my $protein_M = substr($protein, "M");
+for (my $i = 0; $i < length($protein); $i++) {
+	my $orf = substr($protein_M, "b");
+	print "$orf\n";
+}
+
+
+sub codon2protein {
+	my $code = shift @_;	    
 return ($genetic_code{$code});
 }
 
