@@ -1,0 +1,33 @@
+#!/usr/bin/perl
+
+use strict; use warnings;
+
+my ($input1) = @ARGV;
+
+die "
+usage: $0 <file>
+
+Sample Dataset
+
+GATATATGCATATACTT
+ATAT
+Sample Output
+
+2 4 10
+" unless @ARGV;
+
+open (my $in1, "<", $input1) or die "Cannot read from $input1: $!\n";
+my $string = <$in1>; chomp($string);
+my $sub = <$in1>; chomp($sub);
+my ($first) = $sub =~ /^(\w)/;
+close $in1;
+
+my $pos;
+while ($string =~ /$first/g) {
+	$pos = length($`) + 1;
+	my $curr = $& . $';
+	if ($curr =~ /^$sub/) {
+		print "$pos ";
+	}
+}
+print "\n";
