@@ -7,7 +7,7 @@ use Data::Dumper;
 use List::Util qw/max min/;
 
 my @profile;
-my @count = [0];
+my $count = [];
 my $seq;
 
 open(my $in,"<$ARGV[0]") or die;
