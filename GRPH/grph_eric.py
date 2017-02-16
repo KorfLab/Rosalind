@@ -11,7 +11,7 @@ try:
 except IndexError:
 	sys.exit('Please enter input file as ARGV1.')
 	
-dna_pre_suf = {}	#Dictionary containg prefixes and suffixes of DNA strings
+dna_pre_suf = {}	#Dictionary containing prefixes and suffixes of DNA strings
 
 with open(fil) as infile:
 	dna = ''
