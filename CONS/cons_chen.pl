@@ -23,11 +23,10 @@ while (my $entry = $fasta->nextEntry) {
 		elsif ($seq[$i] eq "T") {$count[2]->[$i]++}
 		else                    {$count[3]->[$i]++} 
 	}
-
-	print Dumper(@count);
 }
+print Dumper(@count);
 
-consensus:
+#consensus:
 for (my $i=0; $i < length($seq); $i++) {
 	if    (max(@count->[$i]) == $count[0]->[$i]) {print "A\t"}
 	elsif (max(@count->[$i]) == $count[1]->[$i]) {print "C\t"}
