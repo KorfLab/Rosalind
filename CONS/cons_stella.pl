@@ -61,8 +61,8 @@ foreach my $nuc (@nuc[0..@nuc-1]) {
 		$data{$pos}{$nuc} = 0 if not defined $data{$pos}{$nuc};
 		$body .= " $data{$pos}{$nuc}";
 		next if $nuc ne $nuc[0];
-		foreach my $nuc (sort {$data{$pos}{$b} <=> $data{$pos}{$a}} keys %{$data{$pos}}) {
-			$header .= $nuc;
+		foreach my $nuc2 (sort {$data{$pos}{$b} <=> $data{$pos}{$a}} keys %{$data{$pos}}) {
+			$header .= $nuc2;
 			last;
 		}
 	}
