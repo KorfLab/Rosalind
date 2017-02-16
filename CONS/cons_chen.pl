@@ -24,7 +24,10 @@ while (my $entry = $fasta->nextEntry) {
 		else                    {$count[3]->[$i]++} 
 	}
 }
-print Dumper(@count);
+printf "A\t%d\n", $count->[0][$i];
+printf "C\t%d\n", $count->[1][$i];
+printf "T\t%d\n", $count->[2][$i];
+printf "G\t%d\n", $count->[3][$i];
 
 #consensus:
 for (my $i=0; $i < length($seq); $i++) {
