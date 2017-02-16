@@ -48,6 +48,7 @@ for seq in dna_strings:
 i = 0
 consensus = ""
 
+# this next part is super ugly, could be prettier
 while i < len(seq):
 	m = 0
 	if matrix_dic["A"][i] > m:
