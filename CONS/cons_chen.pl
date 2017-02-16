@@ -7,7 +7,7 @@ use Data::Dumper;
 use List::Util qw/max min/;
 
 my @profile;
-my $count = [];
+my @count;
 my $seq;
 
 open(my $in,"<$ARGV[0]") or die;
@@ -18,22 +18,20 @@ while (my $entry = $fasta->nextEntry) {
 	my @seq = split("",$seq); 
 	#profile:
 	for (my $i = 0; $i < length($seq); $i++) {
-		if    ($seq[$i] eq "A") {$count[0]->[$i]++}
-		elsif ($seq[$i] eq "C") {$count[1]->[$i]++}
-		elsif ($seq[$i] eq "T") {$count[2]->[$i]++}
-		else                    {$count[3]->[$i]++} 
+		if    ($seq[$i] eq "A") {$count[0][$i]++}
+		elsif ($seq[$i] eq "C") {$count[1][$i]++}
+		elsif ($seq[$i] eq "T") {$count[2][$i]++}
+		else                    {$count[3][$i]++} 
 	}
 }
-printf "A\t%d\n", $count->[0][$i];
-printf "C\t%d\n", $count->[1][$i];
-printf "T\t%d\n", $count->[2][$i];
-printf "G\t%d\n", $count->[3][$i];
+print Dumper(@count);
 
-#consensus:
+
+# consensus:
 for (my $i=0; $i < length($seq); $i++) {
-	if    (max(@count->[$i]) == $count[0]->[$i]) {print "A\t"}
-	elsif (max(@count->[$i]) == $count[1]->[$i]) {print "C\t"}
-	elsif (max(@count->[$i]) == $count[2]->[$i]) {print "T\t"}
-	else                                         {print "G\t"}
+	if    (max(@count->[$i]) == $count[0][$i]) {print "A\t"}
+	elsif (max(@count->[$i]) == $count[1][$i]) {print "C\t"}
+	elsif (max(@count->[$i]) == $count[2][$i]) {print "T\t"}
+	else                                       {print "G\t"}
 }
 close $in;
