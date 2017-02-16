@@ -8,11 +8,10 @@ while(<>) {
 	my @fasta = split("\n",$Fasta,2);
 
 	# find N{P}[ST]{P} motif;
-	print "$fasta[0]\n";
+	print "$_\n";
 	for (my $i = 0; $i < length($fasta[1]); $i++) {
 		my $motif = substr($fasta[1], $i, 4);
-		my $sed;
-		if ($motif =~ m/N[^P][ST][^P]/) {$sed = $i+1; print "$sed\t";}
+		if ($motif =~ m/N[^P][ST][^P]/) {my $sed = $i+1; print "$sed\t";}
 		else {next;}
 	}
 	print "\n";
