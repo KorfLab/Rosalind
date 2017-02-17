@@ -1,5 +1,23 @@
 #!/usr/bin/perl
 # works and fast but super badly coded
+# Groups (from lowest to highest). X is fraction of that nucleotide in that position
+# Group 1: 0 <= x <= 1/4
+# Group 2: 1/4 < x <= 1/3;
+# Group 3: 1/3 < x <= 1/2;
+# Group 4: 1/2 < x <= 1;
+# Consider only nucleotide in the highest group.
+# if highest group is 3 and there's only 1 nucleotide in there, then lowercase that nucleotide
+# but if there are 2 nucleotide then use lowercase IUPAC
+# if there are 3 nucleotides, then if they are exactly 1/3 each, uppercase IUPAC, otherwise lowercase I$
+
+# out of 9 sequences:
+# A C G T
+# 9 0 0 0 = A
+# 5 0 0 4 = a
+# 4 1 0 4 = w (a or t)
+# 3 1 1 4 = t (since A is 1/3, it's group 2, while T is 4/9 so group 3. Only T is considered.)
+# 3 3 0 3 = H (A/C/T)
+# 3 2 1 3 = w (a or t) - since A and T are group 2 (3/9) while C and G are group 1
 
 use strict; use warnings;
 
