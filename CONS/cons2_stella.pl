@@ -103,20 +103,20 @@ foreach my $nuc (@nuc[0..@nuc-1]) {
 }
 
 sub get_iupac {
-	my ($nuc) = @_;
-	$nuc =~ s/-//g;
-	$nuc =~ s/N//g;
-	$nuc =~ s/\.//g;
-	return $nuc if $nuc =~ /^[ACGT]$/;
-	return "R" if $nuc =~ /^[AG]{2}$/;
-	return "Y" if $nuc =~ /^[CT]{2}$/;
-	return "S" if $nuc =~ /^[GC]{2}$/;
-	return "W" if $nuc =~ /^[AT]{2}$/;
-	return "K" if $nuc =~ /^[GT]{2}$/;
-	return "M" if $nuc =~ /^[AC]{2}$/;
-	return "B" if $nuc =~ /^[CGT]{3,3}$/;
-	return "D" if $nuc =~ /^[AGT]{3,3}$/;
-	return "H" if $nuc =~ /^[ACT]{3,3}$/;
-	return "V" if $nuc =~ /^[ACG]{3,3}$/;
-	return "N" if $nuc =~ /^[ACGT]{4,4}$/;
+   my ($nuc) = @_;
+   $nuc =~ s/-//g;
+   $nuc =~ s/N//g;
+   $nuc =~ s/\.//g;
+   return $nuc if $nuc =~ /^[ACGT]$/;
+   return "R" if $nuc =~ /^[AG]{2,2}$/;
+   return "Y" if $nuc =~ /^[CT]{2,2}$/;
+   return "S" if $nuc =~ /^[GC]{2,2}$/;
+   return "W" if $nuc =~ /^[AT]{2,2}$/;
+   return "K" if $nuc =~ /^[GT]{2,2}$/;
+   return "M" if $nuc =~ /^[AC]{2,2}$/;
+   return "B" if $nuc =~ /^[CGT]{3,3}$/;
+   return "D" if $nuc =~ /^[AGT]{3,3}$/;
+   return "H" if $nuc =~ /^[ACT]{3,3}$/;
+   return "V" if $nuc =~ /^[ACG]{3,3}$/;
+   return "N" if $nuc =~ /^[ACGT]{4,4}$/;
 }
