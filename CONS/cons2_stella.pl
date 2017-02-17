@@ -1,6 +1,6 @@
 #!/usr/bin/perl
-# works and fast but super badly coded
 # Groups (from lowest to highest). X is fraction of that nucleotide in that position
+# Range of group is hardcoded. May consider non hardcoded in future.
 # Group 1: 0 <= x <= 1/4
 # Group 2: 1/4 < x <= 1/3;
 # Group 3: 1/3 < x <= 1/2;
@@ -9,6 +9,7 @@
 # if highest group is 3 and there's only 1 nucleotide in there, then lowercase that nucleotide
 # but if there are 2 nucleotide then use lowercase IUPAC
 # if there are 3 nucleotides, then if they are exactly 1/3 each, uppercase IUPAC, otherwise lowercase I$
+# gaps is included in total number of sequence but isn't considered in consensus
 
 # out of 9 sequences:
 # A C G T
@@ -22,6 +23,8 @@
 use strict; use warnings;
 
 my ($input1) = @ARGV;
+
+my @breaks = (1/4, 1/3, 1/2, 1); # hardcoded. Can be changed.
 
 die "usage: $0 <fasta file>
 
@@ -43,7 +46,7 @@ ACCGGTAG
 ATTTTTCC
 
 Sample Output
-   A g Y m N T t S
+AgYmNTtS
 A: 8 1 0 3 2 0 1 0
 C: 0 1 4 3 2 0 1 4
 G: 0 5 0 1 2 0 0 4
@@ -57,19 +60,14 @@ my @nuc = qw(A C G T);
 open (my $in1, "<", $input1) or die "Cannot read from $input1: $!\n";
 while (my $line = <$in1>) {
 	chomp($line);
-	if ($line =~ />/) {
-		$ref = $line;
-		$ref =~ s/>//;
+	if ($line =~ /^>/) {
 		$pos = 0;
 		$total ++;
 	}
 	else {
 		for (my $i = 0; $i < length($line); $i++) {
 			my $nuc = substr(uc($line), $i, 1);
-			if (not grep(/$nuc/i, @nuc)) {
-				print "Undefined nuc $nuc\n";
-				push(@nuc, $nuc);
-			}
+			push(@nuc, $nuc) if (not grep(/$nuc/i, @nuc));
 			$data{$pos}{$nuc} ++;
 			$pos ++;
 		}
@@ -77,83 +75,48 @@ while (my $line = <$in1>) {
 }
 close $in1;
 
-my $header;
-my $body;
+foreach my $pos (sort {$a <=> $b} keys %data) {
+	my ($final, $lastgroup, $lc_check);
+	foreach my $nuc (sort {$data{$pos}{$b} <=> $data{$pos}{$a}} keys %{$data{$pos}}) {
+		my $value = $data{$pos}{$nuc} / $total;
+		my $group = @breaks;
+		while ($group > 1 and $value <= $breaks[$group-2]) {
+			$group --;
+		}
+		last if (defined $lastgroup and $lastgroup != $group);
+		$final .= $nuc;
+		$lc_check = 1 if $value < $breaks[$group-1];
+		$lastgroup = $group;
+	}
+	$final = defined $lc_check ? lc(get_iupac($final)) : get_iupac($final);
+	print "$final";
+}
+print "\n";
 foreach my $nuc (@nuc[0..@nuc-1]) {
-	$body .= "$nuc:";
+	print  "$nuc:";
 	foreach my $pos (sort {$a <=> $b} keys %data) {
 		$data{$pos}{$nuc} = 0 if not defined $data{$pos}{$nuc};
-		$body .= " $data{$pos}{$nuc}";
+		print  " $data{$pos}{$nuc}";
 		next if $nuc ne $nuc[0];
-		my $prev;
-		foreach my $nuc2 (sort {$data{$pos}{$b} <=> $data{$pos}{$a}} keys %{$data{$pos}}) {
-			my $value = $data{$pos}{$nuc2};
-			if ($value > 0.5 * $total) { #A = 100/100; a = 51/100
-				$header .= $value == $total ? $nuc2 : lc($nuc2); 
-				#print "$pos: 1. $header\n";
-				last;
-			}
-			elsif ($value > $total / 3) {# a = 35/100, t = 34/100;
-				if (defined $prev and $prev =~ /^TWO/) {
-					my ($nuc1) = $prev =~ /TWO;(.+)$/;
-					my $nuc3 = get_iupac("$nuc1$nuc2");
-					$header .= $value * 2 == $total ? $nuc3 : lc($nuc3); 
-					#print "$pos: 2. $header\n"; 
-					last;
-				}
-				else {
-					$prev .= "TWO;$nuc2";
-				}
-			}
-			elsif (defined $prev and $prev =~ /^TWO/) {
-				my ($nuc1) = $prev =~ /TWO;(.+)$/;
-				$nuc1 = get_iupac("$nuc1");
-				$header .= lc($nuc1); last;
-			}
-			elsif ($value > $total / 4) {
-				if (defined $prev and $prev =~ /^THREE/) {
-					if ($prev =~ /^\w+;.;.$/) {
-						my ($nuc1) = $prev =~ /THREE;(.+)$/; $nuc1 =~ s/;//g;
-						my $nuc3 = get_iupac("$nuc1$nuc2");
-						$header .= $value * 3 == $total ? $nuc3 : lc($nuc3); 
-						print "$pos: 3. $header\n"; 
-						last;
-					}
-					else {
-						$prev .= ";$nuc2";
-					}
-				}
-				else {
-					$prev .= "THREE;$nuc2";
-				}
-			}
-			elsif (defined $prev and $prev =~ /^THREE/) {
-				my ($nuc1) = $prev =~ /THREE;(.+)$/; $nuc1 =~ s/;//g;
-				$nuc1 = get_iupac("$nuc1");
-				$header .= lc($nuc1); last;
-			}
-			else {
-				$header .= "N"; last;
-			}
-		}
 	}
-	$body .= "\n";
+	print  "\n";
 }
-
-print "   " . join(" ", split("", $header)) . "\n$body";
 
 sub get_iupac {
 	my ($nuc) = @_;
-	return $nuc if $nuc =~ /^.$/;
-	return "R" if $nuc =~ /[AG][AG]/;
-	return "Y" if $nuc =~ /[CT][CT]/;
-	return "S" if $nuc =~ /[GC][GC]/;
-	return "W" if $nuc =~ /[AT][AT]/;
-	return "K" if $nuc =~ /[GT][GT]/;
-	return "M" if $nuc =~ /[AC][AC]/;
-	return "B" if $nuc =~ /[CGT][CGT][CGT]/;
-	return "D" if $nuc =~ /[AGT][AGT][AGT]/;
-	return "H" if $nuc =~ /[ACT][ACT][ACT]/;
-	return "V" if $nuc =~ /[ACG][ACG][ACG]/;
-	return "N" if $nuc =~ /[ACGT][ACGT][ACGT][ACGT]/;
+	$nuc =~ s/-//g;
+	$nuc =~ s/N//g;
+	$nuc =~ s/\.//g;
+	return $nuc if $nuc =~ /^[ACGT]$/;
+	return "R" if $nuc =~ /^[AG]{2}$/;
+	return "Y" if $nuc =~ /^[CT]{2}$/;
+	return "S" if $nuc =~ /^[GC]{2}$/;
+	return "W" if $nuc =~ /^[AT]{2}$/;
+	return "K" if $nuc =~ /^[GT]{2}$/;
+	return "M" if $nuc =~ /^[AC]{2}$/;
+	return "B" if $nuc =~ /^[CGT]{3,3}$/;
+	return "D" if $nuc =~ /^[AGT]{3,3}$/;
+	return "H" if $nuc =~ /^[ACT]{3,3}$/;
+	return "V" if $nuc =~ /^[ACG]{3,3}$/;
+	return "N" if $nuc =~ /^[ACGT]{4,4}$/;
 }
