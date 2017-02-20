@@ -38,83 +38,50 @@ for seq in dna_str:
 def one_likely(cons_str, top_nucs, counter):
 	"""Extends cons_str when there is one most likely nucleotide"""
 	if top_nucs == ['A']:
-		if 0 in counter and counter[0] == 3:
-			cons_str += 'A'
-		else:
-			cons_str += 'a'
+		base = 'a'
 	elif top_nucs == ['C']:
-		if 0 in counter and counter[0] == 3:
-			cons_str += 'C'
-		else:
-			cons_str += 'c'
+		base = 'c'
 	elif top_nucs == ['G']:
-		if 0 in counter and counter[0] == 3:
-			cons_str += 'G'
-		else:
-			cons_str += 'g'
+		base = 'g'
 	elif top_nucs == ['T']:
-		if 0 in counter and counter[0] == 3:
-			cons_str += 'T'
-		else:
-			cons_str += 't'
+		base = 't'
+	if counter[0] == 3:
+		base = base.upper()
+	cons_str += base
 	return cons_str
 
 def two_likely(cons_str, top_nucs, counter):
 	"""Extends cons_str when there are two equally likely nucleotides"""
 	if top_nucs == ['A', 'G']:
-		if 0 in counter and counter[0] == 2:
-			cons_str += 'R'
-		else:
-			cons_str += 'r'
+		base = 'r'
 	elif top_nucs == ['C', 'T']:
-		if 0 in counter and counter[0] == 2:
-			cons_str += 'Y'
-		else:
-			cons_str += 'y'
+		base = 'y'
 	elif top_nucs == ['C', 'G']:
-		if 0 in counter and counter[0] == 2:
-			cons_str += 'S'
-		else:
-			cons_str += 's'
+		base = 's'
 	elif top_nucs == ['A', 'T']:
-		if 0 in counter and counter[0] == 2:
-			cons_str += 'W'
-		else:
-			cons_str += 'w'
+		base = 'w'
 	elif top_nucs == ['G', 'T']:
-		if 0 in counter and counter[0] == 2:
-			cons_str += 'K'
-		else:
-			cons_str += 'k'
+		base = 'k'
 	elif top_nucs == ['A', 'C']:
-		if 0 in counter and counter[0] == 2:
-			cons_str += 'M'
-		else:
-			cons_str += 'm'
+		base = 'm'
+	if counter[0] == 2:
+		base = base.upper()
+	cons_str += base
 	return cons_str
 
 def three_likely(cons_str, top_nucs, counter):
 	"""Extends cons_str when there are three equally likely nucleotides"""
 	if top_nucs == ['C', 'G', 'T']:
-		if 0 in counter and counter[0] == 1:
-			cons_str += 'B'
-		else:
-			cons_str += 'b'
+		base = 'b'
 	elif top_nucs == ['A', 'G', 'T']:
-		if 0 in counter and counter[0] == 1:
-			cons_str += 'D'
-		else:
-			cons_str += 'd'
+		base = 'd'
 	elif top_nucs == ['A', 'C', 'T']:
-		if 0 in counter and counter[0] == 1:
-			cons_str += 'H'
-		else:
-			cons_str += 'h'
+		base = 'h'
 	elif top_nucs == ['A', 'C', 'G']:
-		if 0 in counter and counter[0] == 1:
-			cons_str += 'V'
-		else:
-			cons_str += 'v'
+		base = 'v'
+	if counter[0] == 1:
+		base = base.upper()
+	cons_str += base
 	return cons_str
 
 def all_likely(cons_str):
