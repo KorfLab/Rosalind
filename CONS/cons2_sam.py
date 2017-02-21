@@ -73,16 +73,19 @@ while i < len(seq):
 	if (second_nuc / top_nuc) < 0.5:
 		# nothing ambiguous here!
 		if top_nuc == A_ct:
-			consensus_nuc = "A"
+			consensus_nuc = "a"
 		elif top_nuc == T_ct:
-			consensus_nuc = "T"
+			consensus_nuc = "t"
 		elif top_nuc == G_ct:
-			consensus_nuc = "G"
+			consensus_nuc = "g"
 		elif top_nuc == C_ct:
-			consensus_nuc = "C"
+			consensus_nuc = "c"
+		if (second_nuc / top_nuc) <= 0.1: # 90% or better guess
+			consensus_nuc = consensus_nuc.upper()
+
 	else:
 		# now we're getting into ambiguous sequences
-		if (third_nuc / top_nuc) < 0.5:
+		if (third_nuc / top_nuc) < 0.2:
 			if top_nuc == A_ct:
 				if second_nuc == T_ct:
 					consensus_nuc = "W"
@@ -128,7 +131,7 @@ while i < len(seq):
 	i += 1
 	
 	# disable these next couple lines if you want the ambiguous codes returned in upper case
-	if consensus_nuc not in "ATGC":
+	if consensus_nuc not in "atgcATGC":
 		consensus_nuc = consensus_nuc.lower()
 		
 		
