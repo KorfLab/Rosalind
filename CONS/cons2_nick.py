@@ -2,7 +2,7 @@
 
 #cons2_nick.py
 #Let's complicate this shit
-def ambsets(tie):
+def ambsets(tie):   #IUPAC nucleotide ambiguity codes
   if tie == 2:
     return {
       'M':set(['A','C']),
@@ -33,7 +33,6 @@ def error_check_len(arr):  #make sure all seqs in array are the same length
       return False
       break
   return True
-      
 
 def score(seq_arr):
   scores = []
@@ -60,7 +59,7 @@ def build_cons(scr, tmx):
       consc =  sortNuc[0]
     elif maxv > tmx/2:
       consc =  sortNuc[0].lower()
-    else:
+    else:  #there is a tie
       j = len(sortNuc)
       while consc == '' and j > 1:   #j represents number of nucleotides in a tie
         if maxv - scr[i][sortNuc[j-1]] < tol: #check for significant nucleotides tie  
@@ -71,20 +70,7 @@ def build_cons(scr, tmx):
                 consc = x 
               else:
                 consc = x.lower()
-        j -= 1            
-#     elif maxv == scr[i][sortNuc[1]]:  #at least 2 nucleotides tie
-#       if maxv == scr[i][sortNuc[3]]:  #4 nucleotides tie
-#         consc = 'N'
-#       elif maxv == scr[i][sortNuc[2]]: #3 nucleotides tie
-#         asets =  ambsets(3)  #get the ambiguity sets
-#         for x in asets:
-#           if asets[x].issuperset(sortNuc[:3]):
-#             consc = x
-#       else: #only 2 nucleotides tie
-#         asets = ambsets(2)
-#         for x in asets:
-#           if asets[x].issuperset(sortNuc[:2]):
-#             consc = x                
+        j -= 1                           
     cons += consc   
   return cons
 
@@ -112,7 +98,7 @@ if __name__ == "__main__":
     assert error_check_len(seq_arr), "Incorrect input data"
     totmax = len(seq_arr)
     scores_arr, nucset = score(seq_arr)
-    o.write(build_cons(scores_arr,totmax))
-    o.write(out_score_tb(scores_arr, nucset))
+    o.write(build_cons(scores_arr,totmax)) #write the consesus seq
+    o.write(out_score_tb(scores_arr, nucset)) #write the output table
     f.close()
     o.close()
