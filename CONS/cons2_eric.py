@@ -141,7 +141,7 @@ def main():
 		}
 		base = iupac_bases[top_nucs]
 		#Change base to lowercase if needed
-		if min(kl_list) >= 0.05:
+		if min(kl_list) >= 0.05:	#Arbitrary cutoff value
 			base = base.lower()
 		#Extend cons_str
 		cons_str += base
