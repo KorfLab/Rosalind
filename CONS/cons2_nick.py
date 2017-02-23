@@ -66,7 +66,7 @@ def build_cons(scr, tmx):
           asets =  ambsets(j)  #get the corresponding ambiguity sets
           for x in asets:
             if asets[x].issuperset(sortNuc[:j]):
-              if tmx/j - maxv < 1:
+              if tmx/j - maxv < tol:
                 consc = x 
               else:
                 consc = x.lower()
