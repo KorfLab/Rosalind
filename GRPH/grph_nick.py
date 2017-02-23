@@ -1,8 +1,6 @@
 #!/usr/bin/env Python2.7
 
 #grph_nick.py
-
-#Luke Filewalker?
 def fasta_to_dict(fasta_str):
   from Bio import SeqIO
   return {record.id:str(record.seq) for record in SeqIO.parse(fasta_str, "fasta")}
