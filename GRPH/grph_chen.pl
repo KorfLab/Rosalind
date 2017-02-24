@@ -17,7 +17,7 @@ my %hash;
 foreach my $seq (@seq) {
 	foreach my $ref (@seq) {
 			for (my $i = 0; $i < (@seq-3); $i++) {
-				for(my $j = 3; $j < @seq; $i++) {
+				for(my $j = 3; $j < @seq; $j++) {
 					if (substr($seq, $i, 3) eq substr($ref, $j, 3)) {
 						if ($i < $j) {
 							push keys %hash, $seq;
