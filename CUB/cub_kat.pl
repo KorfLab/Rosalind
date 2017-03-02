@@ -35,7 +35,7 @@ my $id;
 my $seq = '';
 my $first = 1;
 
-while(<$in>)
+while (<$in>)
 {
 	chomp;
 	if($_ =~ m/^>(.+)/)
@@ -46,7 +46,7 @@ while(<$in>)
 		}
 		else
 		{
-			for(my $i = 0; $i < length($seq) -2; $i+=3)
+			for (my $i = 0; $i < length($seq) -2; $i+=3)
 			{
 				 $cod_usage{$codons_aa{substr($seq, $i, 3)}}{substr($seq, $i, 3)}{$id}++;
 				 $cod_usage{$codons_aa{substr($seq, $i, 3)}}{substr($seq, $i, 3)}{cTOTAL}++;
@@ -60,7 +60,7 @@ while(<$in>)
 		$seq .= $_
 	}
 }
-for(my $i = 0; $i < length($seq) -2; $i+=3)
+for (my $i = 0; $i < length($seq) -2; $i+=3)
 {
 	 $cod_usage{$codons_aa{substr($seq, $i, 3)}}{substr($seq, $i, 3)}{$id}++;
 	 $cod_usage{$codons_aa{substr($seq, $i, 3)}}{substr($seq, $i, 3)}{cTOTAL}++;
@@ -81,7 +81,7 @@ foreach my $aa (keys %cod_usage)
 {
 	foreach my $codon (keys %{$cod_usage{$aa}})
 	{
-		if($codon ne "aTOTAL")
+		if ($codon ne "aTOTAL")
 		{
 			print "$codon $aa\t";
 			print $cod_usage{$aa}{$codon}{cTOTAL} / $grand_tot, "\t";
