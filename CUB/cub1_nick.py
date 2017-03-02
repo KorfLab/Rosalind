@@ -99,7 +99,7 @@ def outputusagetbs(cctb, cftb, actb, aftb):
       logodd = '{:.5f}'.format(math.log(cftb[codon]) - math.log(1-cftb[codon]))
     except ValueError:
       logodd = '{:>8}'.format('Error') 
-    out += ' {}  ({:6d})'.format(logodd, count)
+    out += ' {} {:6d}'.format(logodd, count)
   out2 = 'Nick\'s CUB output: 1b. Acid Frequency Table'
   for acid, count in sorted(actb.items()):
     out2 += '\n{:4} {:4.1f}'.format(acid, aftb[acid]*1000) #freq per 1000
@@ -107,7 +107,7 @@ def outputusagetbs(cctb, cftb, actb, aftb):
       logodd = '{:.5f}'.format(math.log(aftb[acid]/(1-aftb[acid])))
     except ValueError:
       logodd = '{:>8}'.format('Error') 
-    out2 += ' {}  ({:6d})'.format(logodd, count)
+    out2 += ' {} {:7d}'.format(logodd, count)
   return out, out2
 
 def translate_from_dna(dnaSeq):
