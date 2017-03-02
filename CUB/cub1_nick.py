@@ -93,7 +93,7 @@ def outputusagetbs(cctb, cftb, actb, aftb):
   out = 'Nick\'s CUB output: 1a. Codon Frequency Table'
   import math
   for codon, count in sorted(cctb.items()):
-    out += '\n{} {:4.1f}'.format(codon, cftb[codon]*1000) #freq per 1000
+    out += '\n{} {:5.2f}'.format(codon, cftb[codon]*1000) #freq per 1000
     #logodd  p1
     try: 
       logodd = '{:.5f}'.format(math.log(cftb[codon]) - math.log(1-cftb[codon]))
@@ -102,7 +102,7 @@ def outputusagetbs(cctb, cftb, actb, aftb):
     out += ' {} {:6d}'.format(logodd, count)
   out2 = 'Nick\'s CUB output: 1b. Acid Frequency Table'
   for acid, count in sorted(actb.items()):
-    out2 += '\n{:4} {:4.1f}'.format(acid, aftb[acid]*1000) #freq per 1000
+    out2 += '\n{:4} {:5.2f}'.format(acid, aftb[acid]*1000) #freq per 1000
     try: 
       logodd = '{:.5f}'.format(math.log(aftb[acid]/(1-aftb[acid])))
     except ValueError:
@@ -117,18 +117,15 @@ if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser(description = """Determine the codon usage of a genome
                                                   along with the amino acid usage""")
-    parser.add_argument("RNAsequenceFile", help="genome fasta file")
+    parser.add_argument("sequenceFile", help="genome fasta file")
     parser.add_argument("codonOutputF", nargs="?", help = "optional codon usage file name", default = "cdnUse.txt")
     parser.add_argument("acidOutputF", nargs="?", help = "optional acid usage file name", default = "acdUse.txt")
     args = parser.parse_args()
-    #get RNA sequence
-    g = open(args.RNAsequenceFile)
+    #get sequences
+    g = open(args.sequenceFile)
     rseq_dicti = fasta_to_dict(g)
     g.close()
-    pseq_dicti = {}
-    err_dicti = {}
-    cdnuse_dicti = {}
-    prot_db = {}
+    
     cctb, cftb, tt = make_codon_usage_tb(rseq_dicti)
     actb, aftb = make_acid_usage_tb(rseq_dicti)    
     #output
@@ -139,4 +136,3 @@ if __name__ == "__main__":
     o.close()
     o2.write(acOut)
     o2.close()
-        
