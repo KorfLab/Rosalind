@@ -15,16 +15,11 @@ def process_fasta(fasta_str):
   record = SeqIO.read(fasta_str, "fasta")
   #print (record.seq)  # or print str(record.seq)  to get the string.
   return record
-# Build a list of short sequences:
-#short_sequences = [record for record in input_seq_iterator \
-#                   if len(record.seq) < 300]  
-  
+ 
 def find_glycosylation_motif(seq):
   import re
-  #find
   #[XY] means "either X or Y" and {X} means "any amino acid except X." For example, the N-glycosylation motif is written as N{P}[ST]{P}.  
   return  [m.start() + 1 for m in re.finditer(r'N[^P][ST][^P]',seq)] 
-                                        #string.split(s [,sep [,maxsplit]]) 
 
 if __name__ == "__main__":
     import argparse
