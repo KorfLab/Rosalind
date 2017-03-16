@@ -12,13 +12,11 @@ class BED:
 
 bedfile = [
 	BED('A', 100, 300),
+	BED('B', 100, 200),
 	BED('A', 100, 200),
 	BED('A', 200, 300),
-	BED('B', 100, 200),
 ]
 
 print("by chrom")
-sorted(bedfile, key=lambda bed: bed.chr)
-print(bedfile)
-
-
+beds = sorted(bedfile, key=lambda bed: (bed.chr, bed.beg, bed.end))
+print(beds)
