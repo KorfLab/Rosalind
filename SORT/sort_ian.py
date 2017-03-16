@@ -15,7 +15,7 @@ for line in infile:
 	bedfile.append(BED(f[0], f[1], f[2]))
 
 
-print("by chrom")
+print("by chrom, beg, end")
 beds = sorted(bedfile, key=lambda bed: (bed.chr, bed.beg, bed.end))
 print(beds)
 
