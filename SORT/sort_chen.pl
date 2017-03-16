@@ -20,5 +20,3 @@ while(<>) {
 	print Dumper(@array_chr);
 	print Dumper(@array_len);
 	print Dumper(@array_new);
-	
-	print Dumper(@array_new);
