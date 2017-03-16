@@ -43,6 +43,7 @@ if sys.argv[2] == "length":
 
 # sort by chrom, then beg, then end
 if sys.argv[2] == "complex":
-	sorted_chr = sorted(bed_db, key=bed_db.get)
+	sorted_chr = sorted(bed_db, key=lambda k: (bed_db[k][0], bed_db[k][1], bed_db[k][2]))
+#	print sorted_chr
 	for x in sorted_chr:
 		print chr_db[x] + "\t" + begin_db[x] + "\t" + end_db[x]
