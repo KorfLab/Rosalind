@@ -20,7 +20,7 @@ my @nt = qw(A C G T);
 my @count; 
 for (my $i = 0; $i < length($seq[0]); $i++) {
 	foreach my $nt (@nt) {
-	$count[$i]{$nt} = 1;
+		$count[$i]{$nt} = 1;
 	}	
 }
 #print Dumper (@count);	
